@@ -1,10 +1,10 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8
 #
-# sticky.py - Sets a user to sticky in a channel, even after reconnect. (With temporary groups).
+# sticky.py - Puts a user into a STicky channel; works even after reconnect. (With temporary groups).
 #
 # Copyright (c) 2010, Natenom / Natenom@googlemail.com
-# Version: 0.0.4
+# Version: 0.1.0
 # 2010-09-09
 
 ## Server settings ##
@@ -14,9 +14,9 @@ iceport=60000
 icesecret="secureme"
 serverid=1
 
-## ST Settings ##
-st_channel=1349 #Id of the big boese Stille-Treppe channel.
-st_group="stilletreppekinder" #Name of the group for Stille-Treppe users.
+## Sticky Settings ##
+st_channel=1349 #Id of the sticky channel.
+st_group="stilletreppekinder" #Name of the group for sticky users.
 
 ## Messages ##
 msg_addstatus="ST setzen..."
@@ -26,7 +26,7 @@ msg_STadded="<font style='color:red;font-weight:bold;'>Der Benutzer \"%s\" hat e
 msg_stillST="<font style='color:red;font-weight:bold;'>You are still on STicky status.</font>"
 ## DO NOT EDIT BELOW THIS LINE ##
 
-st_user={} #Termporary list of Stille-Treppe UserIDs
+st_user={} #Termporary list of sticky UserIDs
 
 import Ice, sys
 Ice.loadSlice("--all -I/usr/share/slice %s" % iceslice)
