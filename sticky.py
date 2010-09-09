@@ -4,8 +4,11 @@
 # sticky.py - Puts a user into a STicky channel; works even after reconnect. (With temporary groups).
 #
 # Copyright (c) 2010, Natenom / Natenom@googlemail.com
-# Version: 0.1.0
+# Version: 0.1.1
 # 2010-09-09
+
+
+#BUGS Derjenige der Sticky wird, sieht die Meldung nicht, d.h. an ihn gesondert schreiben :)
 
 ## Server settings ##
 iceslice='/usr/share/slice/Murmur.ice'
@@ -36,10 +39,10 @@ import Murmur
 class MetaCallbackI(Murmur.MetaCallback):
     def started(self, s, current=None):
         serverR=Murmur.ServerCallbackPrx.uncheckedCast(adapter.addWithUUID(ServerCallbackI(server, current.adapter)))
-        server.addCallback(serverR)
+        s.addCallback(serverR)
 
     def stopped(self, s, current=None):
-        return 0
+        print "stopped"
 
 class ServerCallbackI(Murmur.ServerCallback):
     def __init__(self, server, adapter):
@@ -61,19 +64,19 @@ class ServerCallbackI(Murmur.ServerCallback):
 	    self.server.sendMessage(UserState.session, msg_stillST)
 
     def userDisconnected(self, p, current=None):
-      return 0
+      print "Disconnected"
     
     def userStateChanged(self, p, current=None):
-      return 0
+      print "userStateChanged"
 
     def channelCreated(self, c, current=None):
-      return 0
+      print "channelCreated"
 
     def channelRemoved(self, c, current=None):
-      return 0
+      print "ChannelRemoved"
 
     def channelStateChanged(self, c, current=None):
-      return 0
+      print "channelStateChanged"
 
 class ServerContextCallbackI(Murmur.ServerContextCallback):
     def __init__(self, server):
@@ -85,7 +88,7 @@ class ServerContextCallbackI(Murmur.ServerContextCallback):
       
       if (action == "stdel"): #Remove a user out of ST list.
 	  if (p.session == session): #The bad guy can't remove his own ST status :P
-	      return 1
+	      return
 	  else:
 	      UserState=self.server.getState(session)
 	      if UserState.userid in st_user:
@@ -100,19 +103,22 @@ class ServerContextCallbackI(Murmur.ServerContextCallback):
 
 	  if (p.session == session): #Nobody should be able to beat himself :P
 	      self.server.sendMessage(p.session, "<font style='color:red;font-weight:bold;'>You can't set yourself to ST status.</font>")
-	      return 1
+	      return
 	  if (p.userid in st_user): #A beaten user, even if admin, should not be able to beat other users while in ST status.
 	      self.server.sendMessage(p.session, "<font style='color:red;font-weight:bold;'>You are in ST status, you can't set another user to ST.</font>")
-	      return 1
+	      return
 	  if (UserState.userid in st_user): #If already in ST, don't repeat it...
 	      self.server.sendMessage(p.session, "<font style='color:red;font-weight:bold;'>This user already has ST status.</font>")
-	      return 1
+	      return
 
 	  UserState.channel=st_channel
 	  st_user[UserState.userid] = chanid #Add user to ST list.
 	  self.server.addUserToGroup(0, session, st_group) #Add user to server group.
 	  self.server.setState(UserState)
 	  self.server.sendMessageChannel(chanid,True, msg_STadded % (UserState.name, p.name))
+	  self.server.sendMessage(UserState.session, "<font style='color:red;font-weight:bold;'>\'%s\' did set you to stick status.</font>" % p.name)
+
+      return
 
 if __name__ == "__main__":
     global contextR
