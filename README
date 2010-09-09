@@ -9,6 +9,7 @@ Features:
   * Sticky status is stored over reconnects.
   * When reconnecting, a sticky user gets a warning that he is still in sticky status.
   * Uses callbacks to display two context menu entries.
+  * You can't set sticky on yourself.
 
 What you need to do:
   * Create a channel somewhere in your server tree...
