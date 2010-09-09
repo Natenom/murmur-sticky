@@ -1,14 +1,17 @@
-A user who gets the StilleTreppe (ST) status can't do more than sitting in one defined channel.
-Even admins will loose their permissions while in ST status :)
+sticky.py
+  A user who gets the sticky status can't do more than sitting in one special channel.
+  Even admins will loose their permissions while in ST status :)
 
 Features:
-  * While in ST status, nobody can do anything else than talking in the sticky (StilleTreppe) channel.
-  * A user can't remove his ST status even if he is an admin.
-  * A user, even if admin, can't set another user to ST status while he is in this status.
-  * ST status is stored over reconnects.
-  * When reconnecting a ST user gets a warning that he is still in ST status.
+  * While in sticky status, nobody can do anything else than talking in the sticky channel.
+  * A user can't remove his sticky status even if he is an admin.
+  * A user, even if admin, can't set another user to sticky status while he is in this status.
+  * Sticky status is stored over reconnects.
+  * When reconnecting, a sticky user gets a warning that he is still in sticky status.
+  * Uses callbacks to display two context menu entries.
 
 What you need to do:
+  * Create a channel somewhere in your server tree...
   * Create a group "stickyusers" and add ACL entries which deny everything except Speak and Enter
     in your sticky channel (and Traverse for all prior levels).
   * Set st_channel= to the id of your sticky channel.
@@ -16,10 +19,11 @@ What you need to do:
   * Change the other self explaining stuff to your needs.
   * Have fun :)
 
-...Es waere sehr gefaehrlich bei einem Fehler, saemtliche ACL und Gruppen im Rootkanal neu zu schreiben - was man nach meinem
+...
+Es waere sehr gefaehrlich bei einem Fehler, saemtliche ACL und Gruppen im Rootkanal neu zu schreiben - was man nach meinem
   Verstaendnis mittels getACL und setACL tun wuerde.
 Wenns schief laeuft, ist alles weg ...
 Deshalb arbeiten wir mit temporaeren Zugehoerigkeiten zu einer Gruppe. 
 Wir muessen uns zwar bei dieser Art selbst darum kuemmern, dass bei einem Reconnect der Benutzer wieder in der stillen
-Treppe landet, aber das ist mir lieber als zu riskieren, bei einem Fehler alle Einstellungen im Root-Kanal zu verlieren :P
+  Treppe landet, aber das ist mir lieber als zu riskieren, bei einem Fehler alle Einstellungen im Root-Kanal zu verlieren :P
 
