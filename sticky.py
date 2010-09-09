@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8
 #
 # sticky.py - Puts a user into a STicky channel; works even after reconnect. (With temporary groups).
@@ -19,8 +19,8 @@ st_channel=1349 #Id of the sticky channel.
 st_group="stilletreppekinder" #Name of the group for sticky users.
 
 ## Messages ##
-msg_addstatus="ST setzen..."
-msg_removestatus="ST entfernen..."
+msg_addstatus="Set Sticky..."
+msg_removestatus="Remove Sticky..."
 msg_STremoved="<font style='color:green;font-weight:bold;'>Der Benutzer \"%s\" wurde durch \"%s\" rehabilitiert.</font>"
 msg_STadded="<font style='color:red;font-weight:bold;'>Der Benutzer \"%s\" hat einen STicky durch \"%s\" bekommen; Besuche sind erlaubt.</font>"
 msg_stillST="<font style='color:red;font-weight:bold;'>You are still on STicky status.</font>"
